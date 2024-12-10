@@ -3,13 +3,13 @@
 ![rpi5 and dac](https://github.com/user-attachments/assets/55c003f5-7e87-428f-b4b3-eaf175b9dd2c)
 Figure 1 by Himbeer
 
-DAC Module	          /        Raspberry Pi 3
-VIN	                 /         Pin 2 (5V)
-GND	                 /         Pin 6 (GND)
-LCK	                 /         Pin 35
-DIN	                 /         Pin 40
-BCK	                 /         Pin 12
-SCK	                 /         GND
+## DAC 	          /        RPi 5
+## VIN	                 /         Pin 2 (5V)
+## GND	                 /         Pin 6 (GND)
+## LCK	                 /         Pin 35
+## DIN	                 /         Pin 40
+## BCK	                 /         Pin 12
+## SCK	                 /         GND
 
 
 The PCM5102 will generate SCK by itself, but it needs to know that it should do that, this is done by connecting SCK to GND. Otherwise your audio output will sound like a distorted, bass-boosted remix (one could, of course say, that this is a nice feature :D).
