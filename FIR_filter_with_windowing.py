@@ -1,3 +1,4 @@
+
 import time
 import numpy as np
 from scipy.signal import lfilter
@@ -17,7 +18,7 @@ def highpass_FIR(n_taps, normalized_cutoff):
     # Correct the DC component to have a high-pass response
     h_highpass[center] += 1
     # Normalize the filter coefficients
-    h_highpass = h_highpass / np.sum(h_highpass)   
+    h_highpass = h_highpass / np.sum(h_highpass)  
     return h_highpass
 
 # FIR filter subfunctions
@@ -43,44 +44,12 @@ def blackman_window(n_taps):
 # Function to create a Kaiser window
 def kaiser_window(n_taps, beta):
     return np.kaiser(n_taps, beta)
-
-# Apply the filter to the signal
-def apply_fir_filter(signal, filter_coefficients):
-    return lfilter(filter_coefficients, 1.0, signal)
-
-# Load MP3 and convert to WAV
-def load_mp3_to_wav(mp3_file):
-    audio = AudioSegment.from_mp3(mp3_file)
-    audio = audio.set_frame_rate(44100)  # Set to 8000 Hz sampling frequency
-    wav_file = "temp.wav"
-    audio.export(wav_file, format="wav")
-    return wav_file
-
-def play_audio_mono_sounddevice(signal, sampling_rate, duration):
-    # Normalize the signal to 16-bit signed integer (-32768 to 32767)
-    signal = np.int16(signal / np.max(np.abs(signal)) * 32767)
-
-    # Ensure the signal length is sufficient for the duration
-    num_samples = int(sampling_rate * duration)
-    repeated_signal = np.tile(signal, num_samples // len(signal) + 1)[:num_samples]
-
-    # Play the audio through sounddevice
-    sd.play(repeated_signal, samplerate=sampling_rate)
-    sd.wait()  # Wait until the audio finishes playing
-
-# Main code
-def main(mp3_file):
-    # Load and preprocess the MP3 file
-    wav_file = load_mp3_to_wav(mp3_file)
-    sampling_rate, signal = wavfile.read(wav_file)
-    signal = signal.astype(float)  # Convert to float for processing
-     
     # Convert stereo to mono by averaging the left and right channels
     mono_signal = np.mean(signal, axis=1)  # Average the left and right channels
     beta = 8.6
     # FIR filter parameters 15000 is fine
-    n_taps = 11
-    cutoff_freq = 9000  # Cutoff frequency in Hz, maximum half of sampling Fs 44100/2 = 22050
+    n_taps = 101
+    cutoff_freq = 10000  # Cutoff frequency in Hz, maximum half of sampling Fs 44100/2 = 22050
     normalized_cutoff = cutoff_freq / sampling_rate
    
     # Design FIR filters with different windows
@@ -92,10 +61,11 @@ def main(mp3_file):
     kaiser_filter = ideal_filter * kaiser_window(n_taps, beta)
    
     # Apply filters to the mono signal
+    filtered_origin_signal = apply_fir_filter(mono_signal, ideal_filter)
     filtered_mono_hamming = apply_fir_filter(mono_signal, hamming_filter)
     filtered_mono_hanning = apply_fir_filter(mono_signal, hanning_filter)
     filtered_mono_blackman = apply_fir_filter(mono_signal, blackman_filter)
-    filtered_mono_kaiser = apply_fir_filter(mono_signal, kaiser_filter)   
+    filtered_mono_kaiser = apply_fir_filter(mono_signal, kaiser_filter)  
     # Playback options
     print("Playing Original Mono Signal...")
     play_audio_mono_sounddevice(mono_signal, sampling_rate, 17)
@@ -103,6 +73,11 @@ def main(mp3_file):
     # 3-second break between each
     time.sleep(1)
    
+    print("Playing ideal filter Mono Signal...")
+    play_audio_mono_sounddevice(filtered_origin_signal, sampling_rate, 17)
+   
+    # 3-second break between each
+    time.sleep(1)
     print("Playing Signal Filtered with Hamming Window...")
     play_audio_mono_sounddevice(filtered_mono_hamming, sampling_rate, 17)
    
@@ -120,7 +95,7 @@ def main(mp3_file):
    
     # 3-second break between each
     time.sleep(1)
-    
+   
     print("Playing Signal Filtered with Kaiser Window...")
     play_audio_mono_sounddevice(filtered_mono_kaiser, sampling_rate, 17)
    
