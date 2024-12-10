@@ -1,6 +1,6 @@
 # FIR-filter-for-RPi5-with-DAC 
 
-https://i2.wp.com/blog.himbeer.me/wp-content/uploads/2018/12/raspberry_dac.jpg?fit=750%2C421&ssl=1
+
 
 DAC Module	          /        Raspberry Pi 3
 VIN	                 /         Pin 2 (5V)
