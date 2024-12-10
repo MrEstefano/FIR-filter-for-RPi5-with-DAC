@@ -16,25 +16,25 @@ Figure 1 by Himbeer
 The PCM5102 will generate SCK by itself, but it needs to know that it should do that, this is done by connecting SCK to GND. Otherwise your audio output will sound like a distorted, bass-boosted remix (one could, of course say, that this is a nice feature :D).
 Refer to pinout.xyz if you aren’t sure about the Pi’s pin numbering.
 
-Software setup
+## Software setup
 This guide explains it quite well, but I will summarise it here, in case something ever happens to that link.
 Editing boot.txt
 
-Run this command to open the file in a text editor:
+## Run this command to open the file in a text editor:
 sudo nano /boot/config.txt
 
-You will need to change the following things:
-Uncomment (remove the # before the line):
+## You will need to change the following things:
+## Uncomment (remove the # before the line):
 dtparam=i2s=on
-Comment (add a # before the line):
+## Comment (add a # before the line):
 #dtparam=audio=on
-Append this to the end of the file:
+## Append this to the end of the file:
 dtoverlay=hifiberry-dac
 
-Creating asound.conf
-Run this command to open the file in a text editor:
+## Creating asound.conf
+## Run this command to open the file in a text editor:
 sudo nano /etc/asound.conf
-And paste the following:
+## And paste the following:
 pcm.!default  {
  type hw card 0
 }
@@ -42,7 +42,7 @@ ctl.!default {
  type hw card 0
 }
 
-Now reboot your Raspberry Pi
+## Now reboot your Raspberry Pi
 sudo reboot
 
 Credits to:  Himbeer for picture and set up steps
