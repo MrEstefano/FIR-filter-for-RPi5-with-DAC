@@ -48,6 +48,14 @@ sudo reboot
 
 Credits to:  Himbeer for picture and set up steps
 
+## The code has been developed furthur, to be able to plot the frequency spectrum 
+Filter settings:
+taps = 101,
+cutoff = 9600 Hz
+
+![image](https://github.com/user-attachments/assets/bdf6ed0d-8087-4480-bd8f-63e3c6133c7d)
+
+
 DAC PCM5102
 
 ![ZBK8Q](https://github.com/user-attachments/assets/60383264-e44c-41a9-9537-8bbbf705d85c)
