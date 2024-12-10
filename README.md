@@ -1,5 +1,6 @@
-# FIR-filter-for-RPi5-with-DAC 
+# FIR filter aplication using RPi 5 with DAC PCM5102
 
+![rpi5 and dac](https://github.com/user-attachments/assets/55c003f5-7e87-428f-b4b3-eaf175b9dd2c)
 
 
 DAC Module	          /        Raspberry Pi 3
@@ -43,3 +44,8 @@ ctl.!default {
 Now reboot your Raspberry Pi
 sudo reboot
 
+Credits to:  Himbeer for picture and set up steps
+
+DAC PCM5102
+
+![ZBK8Q](https://github.com/user-attachments/assets/60383264-e44c-41a9-9537-8bbbf705d85c)
